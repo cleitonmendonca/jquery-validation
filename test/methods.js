@@ -868,6 +868,15 @@ QUnit.test( "mobileUK", function( assert ) {
 	assert.ok( !method( "+4444342343234" ), "Invalid UK Mobile Number" );
 } );
 
+QUnit.test( "mobileRU", function( assert ) {
+	var method = methodTest( "mobileRU" );
+	assert.ok( method( "+74957207089" ), "Valid RU Mobile Number" );
+	assert.ok( method( "84957207089" ), "Valid RU Mobile Number" );
+	assert.ok( !method( "+447604234323" ), "Invalid RU Mobile Number" );
+	assert.ok( !method( "9477342343234" ), "Invalid RU Mobile Number" );
+	assert.ok( !method( "344342343234" ), "Invalid RU Mobile Number" );
+} );
+
 QUnit.test( "dateITA", function( assert ) {
 	var method = methodTest( "dateITA" );
 	assert.ok( method( "01/01/1900" ), "Valid date ITA" );
@@ -1111,15 +1120,6 @@ QUnit.test( "bankaccountNL", function( assert ) {
 	assert.ok( !method( "755490973" ), "Invalid NL bank account" );
 	assert.ok( !method( "755490979" ), "Invalid NL bank account" );
 	assert.ok( !method( "123456781" ), "Invalid NL bank account" );
-	assert.ok( !method( "123456784" ), "Invalid NL bank account" );
-	assert.ok( !method( "123456788" ), "Invalid NL bank account" );
-} );
-
-QUnit.test( "giroaccountNL", function( assert ) {
-	var method = methodTest( "giroaccountNL" );
-	assert.ok( method( "123" ), "Valid NL giro  account" );
-	assert.ok( method( "1234567" ), "Valid NL giro account" );
-	assert.ok( !method( "123456788" ), "Invalid NL giro account" );
 } );
 
 QUnit.test( "bankorgiroaccountNL", function( assert ) {
@@ -1129,9 +1129,18 @@ QUnit.test( "bankorgiroaccountNL", function( assert ) {
 	assert.ok( method( "123456789" ), "Valid NL bank account" );
 	assert.ok( !method( "12345678" ), "Invalid NL bank or giro account" );
 	assert.ok( !method( "123456788" ), "Invalid NL bank or giro account" );
+	assert.ok( !method( "123456784" ), "Invalid NL bank account" );
+	assert.ok( !method( "123456788" ), "Invalid NL bank account" );
+} );
+
+QUnit.test( "giroaccountNL", function( assert ) {
+	assert.ok( method( "1234567" ), "Valid NL giro account" );
+	assert.ok( !method( "123456788" ), "Invalid NL giro account" );
 } );
 
 QUnit.test( "time", function( assert ) {
+	var method = methodTest( "giroaccountNL" );
+	assert.ok( method( "123" ), "Valid NL giro  account" );
 	var method = methodTest( "time" );
 	assert.ok( method( "00:00" ), "Valid time, lower bound" );
 	assert.ok( method( "23:59" ), "Valid time, upper bound" );
@@ -1715,6 +1724,26 @@ QUnit.test( "cpfBR", function( assert ) {
 	assert.ok( !method( "111444777355" ), "Invalid CPF Number: > 11 digits" );
 	assert.ok( !method( "11144477715" ), "Invalid CPF Number: 1st check number failed" );
 	assert.ok( !method( "11144477737" ), "Invalid CPF Number: 2nd check number failed" );
+} );
+
+QUnit.test( "cnpjBR", function( assert ) {
+	var method = methodTest( "cnpjBR" );
+	assert.ok( method( "18517604000175" ), "Valid CNPJ Number" );
+	assert.ok( method( "18.517.604/0001-75" ), "Valid CNPJ Number" );
+	assert.ok( method( "06994660000111" ), "Valid CNPJ Number" );
+	assert.ok( method( "06.994.660/0001-11" ), "Valid CNPJ Number" );
+	assert.ok( !method( "00000000000000" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "11111111111111" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "22222222222222" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "99999999999999" ), "Invalid CNPJ Number: dump data" );
+	assert.ok( !method( "8517604000175" ), "Invalid CNPJ Number: < 14 digits" );
+	assert.ok( !method( "8.517.604/0001-75" ), "Invalid CNPJ Number: < 14 digits" );
+	assert.ok( !method( "1185176040001750" ), "Invalid CNPJ Number: > 14 digits" );
+	assert.ok( !method( "18.517.604/0001-750" ), "Invalid CNPJ Number: > 14 digits" );
+	assert.ok( !method( "18517604000174" ), "Invalid CNPJ Number" );
+	assert.ok( !method( "18.517.604/0001-74" ), "Invalid CNPJ Number" );
+	assert.ok( !method( "06994660000211" ), "Invalid CNPJ Number" );
+	assert.ok( !method( "06.994.660/0002-11" ), "Invalid CNPJ Number" );
 } );
 
 QUnit.test( "nisBR", function( assert ) {
